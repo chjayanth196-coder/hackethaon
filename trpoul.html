@@ -2,149 +2,400 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Code Cracker Levels Explained</title>
+  <title>Code Cracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --primary: #1e88e5;
+      --secondary: #ffffff;
+      --accent: #fbc02d;
+      --dark: #212121;
+      --light: #f5f5f5;
+    }
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
       margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--light);
+      color: var(--dark);
+    }
+    header {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 2px;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+    nav a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5em 1em;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    nav a:hover {
+      background: var(--accent);
+      color: var(--dark);
     }
     .container {
-      max-width: 850px;
+      max-width: 900px;
       margin: 2rem auto;
-      background: #fff;
-      border-radius: 12px;
+      background: var(--secondary);
+      border-radius: 10px;
       box-shadow: 0 2px 16px #0001;
       padding: 2rem;
     }
-    h1, h2 {
-      color: #1e88e5;
+    .responsive-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .responsive-section > div {
+      flex: 1 1 260px;
+      min-width: 260px;
+    }
+    h2 {
+      color: var(--primary);
       margin-top: 0;
     }
-    .level-section {
-      margin-bottom: 2em;
-      border-left: 5px solid #1e88e5;
-      padding-left: 1em;
-      background: #f1f8fe;
+    ul {
+      padding-left: 1.5em;
+    }
+    .videos-list, .channels-list {
+      list-style: none;
+      padding: 0;
+    }
+    .videos-list li, .channels-list li {
+      margin-bottom: 1.2em;
+      background: var(--light);
+      padding: 0.8em 1em;
+      border-left: 4px solid var(--primary);
       border-radius: 6px;
     }
-    ul {
-      margin: 1em 0 1.5em 1.3em;
+    .videos-list a, .channels-list a {
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: none;
     }
-    .tip {
-      background: #e3f2fd;
-      color: #0d47a1;
-      border-left: 5px solid #1e88e5;
+    .videos-list a:hover, .channels-list a:hover {
+      text-decoration: underline;
+    }
+    /* AI Chart Bot styles */
+    #ai-chart-bot-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      width: 340px;
+      max-width: 95vw;
+      background: var(--secondary);
+      border: 1.5px solid var(--primary);
+      border-radius: 12px 12px 0 12px;
+      box-shadow: 0 8px 24px #0002;
+      font-size: 1em;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s;
+    }
+    #ai-chart-bot-header {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 0.9em 1.2em;
+      border-radius: 12px 12px 0 0;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    #ai-chart-bot-toggle {
+      font-size: 1.6em;
+      cursor: pointer;
+      color: var(--secondary);
+      margin-left: 8px;
+      background: none;
+      border: none;
+    }
+    #ai-chart-bot-body {
       padding: 1em;
-      border-radius: 7px;
-      margin-top: 2em;
-      font-size: 1.05em;
+      background: var(--secondary);
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      border-radius: 0 0 12px 12px;
+    }
+    #ai-chart-bot-messages {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 0.5em;
+    }
+    .ai-message, .user-message {
+      margin: 0.4em 0;
+      padding: 0.6em 0.9em;
+      border-radius: 8px;
+      line-height: 1.5;
+      max-width: 95%;
+      word-break: break-word;
+    }
+    .ai-message {
+      background: #e3f2fd;
+      color: #1e88e5;
+      align-self: flex-start;
+    }
+    .user-message {
+      background: #c8e6c9;
+      color: #256029;
+      align-self: flex-end;
+    }
+    #ai-chart-bot-form {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.3em;
+    }
+    #ai-chart-bot-input {
+      flex: 1;
+      padding: 0.5em 0.7em;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      font-size: 1em;
+    }
+    #ai-chart-bot-send {
+      background: var(--primary);
+      color: var(--secondary);
+      border: none;
+      padding: 0.5em 1.2em;
+      font-size: 1em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #ai-chart-bot-send:hover {
+      background: var(--accent);
+      color: var(--dark);
     }
     @media (max-width: 700px) {
-      .container { padding: 1em; }
+      .container {
+        padding: 1em;
+      }
+      .responsive-section {
+        flex-direction: column;
+        gap: 1em;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8em;
+      }
+      #ai-chart-bot-container {
+        right: 4vw;
+        bottom: 4vw;
+        width: 96vw;
+        max-width: 96vw;
+      }
+      #ai-chart-bot-body {
+        height: 45vw;
+        min-height: 180px;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>Code Cracker</h1>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#videos">Videos</a>
+      <a href="#howto">How to Use</a>
+    </nav>
+  </header>
   <div class="container">
-    <h1>Understanding Code Cracker Levels</h1>
-    <p>
-      Code Cracker is designed for everyone. Here’s how to use the platform at every level:
-    </p>
-
-    <div class="level-section">
-      <h2>Beginner Level</h2>
-      <ul>
-        <li>
-          <strong>Who is it for?</strong>  
-          <br>Absolute beginners—no coding experience needed.
-        </li>
-        <li>
-          <strong>How to start:</strong>
+    <section id="features">
+      <div class="responsive-section">
+        <div>
+          <h2>Features</h2>
           <ul>
-            <li>Go to the <b>Beginner</b> section or select "Beginner" when starting an exercise.</li>
-            <li>Follow the step-by-step instructions and read the problem statements carefully.</li>
-            <li>Use the <b>Hint</b> and <b>Explanation</b> buttons if you’re stuck.</li>
-            <li>Type your code in the editor and click <b>Run</b> or <b>Submit</b> to check your answer.</li>
-            <li>If you make mistakes, read the feedback and fix your code. Don’t be afraid to try again!</li>
+            <li>Step-by-step coding exercises for all levels</li>
+            <li>Clear explanations and hints</li>
+            <li>Automatic detection and feedback on errors in your code</li>
+            <li>Shows the correct code solution for learning</li>
+            <li>Built-in Code Assistant for instant help</li>
+            <li>Google-powered support for documentation &amp; solutions</li>
+            <li>Progress tracking and achievement badges</li>
+            <li>Community Q&amp;A and resource sharing</li>
+            <li><strong>AI Chart Bot for code and data visualization help</strong></li>
+            <li><strong>Responsive design:</strong> Use on phone, tablet, laptop, or desktop!</li>
           </ul>
-        </li>
-        <li>
-          <strong>What you’ll learn:</strong>
+        </div>
+        <div>
+          <h2>Levels</h2>
           <ul>
-            <li>Basic syntax and structure of programming languages (e.g., variables, loops, conditionals)</li>
-            <li>Simple input/output</li>
-            <li>Understanding and fixing basic errors</li>
-            <li>Building confidence step by step</li>
+            <li><b>Beginner:</b> Learn the basics of programming and problem-solving</li>
+            <li><b>Intermediate:</b> Tackle real-world problems and build projects</li>
+            <li><b>Advanced/Pro:</b> Deep dive into complex algorithms, patterns, and system design</li>
           </ul>
-        </li>
-      </ul>
+        </div>
+      </div>
+    </section>
+    <section id="videos">
+      <h2>Best Coding Videos &amp; Channels</h2>
+      <div class="responsive-section">
+        <div>
+          <h3>Best Coding Videos</h3>
+          <ul class="videos-list">
+            <li>
+              <a href="https://www.youtube.com/watch?v=HIj8wU_rGIU" target="_blank">How to Start Coding | Programming for Beginners</a><br>
+              A great video for beginners on where to start and which programming languages to learn.
+            </li>
+            <li>
+              <a href="https://www.placementpreparation.io/blog/best-youtube-channels-to-learn-coding/" target="_blank">
+                10 Best YouTube Channels to Learn Coding in 2025
+              </a><br>
+              This article lists top channels and features some of their best videos.
+            </li>
+            <li>
+              <a href="https://dev.to/programmerlist/29-best-youtube-channels-to-learn-to-code-and-become-a-better-developer-2k6b" target="_blank">
+                29 Best YouTube Channels to Learn to Code
+              </a><br>
+              A comprehensive list of coding channels with video recommendations.
+            </li>
+            <li>
+              <a href="https://tripleten.com/blog/posts/the-best-tech-youtube-channels-for-coders-of-all-levels" target="_blank">
+                The 9 Best Tech YouTube Channels in 2025 | TripleTen
+              </a><br>
+              Find the best tech and coding channels for all levels.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3>Best Coding Channels</h3>
+          <ul class="channels-list">
+            <li>
+              <a href="https://beacons.ai/i/blog/programming-youtubers" target="_blank">
+                Top 10 Programming Youtubers to Watch in 2025
+              </a><br>
+              Highlights popular programming content creators like Traversy Media and Chris Courses.
+            </li>
+            <li>
+              <a href="https://www.placementpreparation.io/blog/best-youtube-channels-to-learn-coding/" target="_blank">
+                10 Best YouTube Channels to Learn Coding in 2025
+              </a><br>
+              Expert-curated list with channel reviews and teaching styles.
+            </li>
+            <li>
+              <a href="https://www.prosperityforamerica.org/best-youtube-channels-to-learn-programming/" target="_blank">
+                14 Best YouTube Channels To Learn Programming 2025
+              </a><br>
+              Free and comprehensive for beginners and intermediates.
+            </li>
+            <li>
+              <a href="https://www.educatorstechnology.com/2023/06/best-youtube-channels-to-learn-how-to-code.html" target="_blank">
+                Best Coding YouTube Channels - Educators Technology
+              </a><br>
+              Includes the popular freeCodeCamp.org channel and others for various topics.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="howto">
+      <h2>How to Use</h2>
+      <p>
+        Code Cracker is designed for everyone! Whether you’re using a phone, tablet, or computer, just open the site to get started.
+        Explore exercises, watch recommended videos, and use the Code Assistant or AI Chart Bot for instant help and data visualization.
+        <br><br>
+        <em>Stay tuned! More instructions and features will be added as the project grows.</em>
+      </p>
+    </section>
+  </div>
+  <!-- AI Chart Bot Widget -->
+  <div id="ai-chart-bot-container">
+    <div id="ai-chart-bot-header">
+      <span>AI Chart Bot</span>
+      <button id="ai-chart-bot-toggle" title="Minimize">&#8722;</button>
     </div>
-
-    <div class="level-section">
-      <h2>Intermediate Level</h2>
-      <ul>
-        <li>
-          <strong>Who is it for?</strong>
-          <br>Anyone with basic programming knowledge—ready for bigger challenges and small projects.
-        </li>
-        <li>
-          <strong>How to use:</strong>
-          <ul>
-            <li>Select the <b>Intermediate</b> level when browsing exercises.</li>
-            <li>Work on real-world problems or mini-projects that combine multiple concepts.</li>
-            <li>Use <b>Hints</b> for partial guidance, but try to solve on your own first.</li>
-            <li>If stuck, use the <b>Code Assistant</b> or <b>AI Chart Bot</b> to ask for help or explanations.</li>
-            <li>Review error feedback and learn from solution comparisons to improve your approach.</li>
-          </ul>
-        </li>
-        <li>
-          <strong>What you’ll learn:</strong>
-          <ul>
-            <li>Problem-solving and algorithmic thinking</li>
-            <li>Working with functions, data structures (arrays, lists, dictionaries, etc.)</li>
-            <li>Basic debugging and reading error messages</li>
-            <li>Making and testing small projects</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <div class="level-section">
-      <h2>Advanced / Pro Level</h2>
-      <ul>
-        <li>
-          <strong>Who is it for?</strong>
-          <br>Experienced coders, students preparing for interviews, or anyone wanting to master advanced topics.
-        </li>
-        <li>
-          <strong>How to use:</strong>
-          <ul>
-            <li>Choose <b>Advanced/Pro</b> challenges or projects.</li>
-            <li>Solve complex problems involving algorithms, optimization, or real-world scenarios.</li>
-            <li>Try to write clean, efficient, and well-documented code.</li>
-            <li>Use the <b>AI Chart Bot</b> to visualize data, analyze results, or debug tricky logic.</li>
-            <li>Compare your code with optimal solutions and seek feedback from the community or Code Assistant.</li>
-          </ul>
-        </li>
-        <li>
-          <strong>What you’ll learn:</strong>
-          <ul>
-            <li>Advanced algorithms and data structures (trees, graphs, dynamic programming, etc.)</li>
-            <li>System design, optimization, and scalable code</li>
-            <li>Debugging complex errors</li>
-            <li>Preparing for technical interviews and coding competitions</li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <div class="tip">
-      <strong>Tip:</strong><br>
-      You can switch levels anytime! Start where you feel comfortable, use hints and assistants as needed, and challenge yourself as you grow. If you have coding doubts or want to visualize your work, talk to the AI Chart Bot for instant help!
+    <div id="ai-chart-bot-body">
+      <div id="ai-chart-bot-messages">
+        <div class="ai-message">Hello! I'm your AI Chart Bot. Ask me about code, data, or request charts and I'll help you visualize or understand your data!</div>
+      </div>
+      <form id="ai-chart-bot-form">
+        <input type="text" id="ai-chart-bot-input" placeholder="Ask about code, data, or charts..." autocomplete="off" required>
+        <button type="submit" id="ai-chart-bot-send">Send</button>
+      </form>
     </div>
   </div>
+  <footer>
+    &copy; 2025 Code Cracker &mdash; Contributions are welcome!
+  </footer>
+  <script>
+    // AI Chart Bot functionality (simulated, replace with real AI integration for production)
+    const botContainer = document.getElementById('ai-chart-bot-container');
+    const botHeader = document.getElementById('ai-chart-bot-header');
+    const botToggle = document.getElementById('ai-chart-bot-toggle');
+    const botBody = document.getElementById('ai-chart-bot-body');
+    const botMessages = document.getElementById('ai-chart-bot-messages');
+    const botForm = document.getElementById('ai-chart-bot-form');
+    const botInput = document.getElementById('ai-chart-bot-input');
+
+    // Minimize/maximize logic
+    botToggle.addEventListener('click', function() {
+      if (botBody.style.display === 'none') {
+        botBody.style.display = 'flex';
+        botToggle.innerHTML = '&#8722;';
+      } else {
+        botBody.style.display = 'none';
+        botToggle.innerHTML = '&#43;';
+      }
+    });
+
+    // Simulated AI response (replace with backend API call in production)
+    function fakeAIResponse(msg) {
+      if (/chart|graph|plot|visual/i.test(msg)) {
+        return "Sure! (If this were the full version, I'd generate a chart based on your data. Try asking for a 'bar chart of programming language popularity' or 'plot this data: 2, 4, 6, 8'.)";
+      }
+      if (/hello|hi|hey/i.test(msg)) {
+        return "Hello! Ask me to visualize your code data or help with chart-related coding questions.";
+      }
+      if (/python|code|js|javascript|java|c\+\+/i.test(msg)) {
+        return "I can help you understand or visualize code and data. For example, 'Show a pie chart of error types in Python logs'.";
+      }
+      return "I'm here to help with code, charts, and data visualizations. Try asking about your code data or how to plot something!";
+    }
+
+    botForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const userMsg = botInput.value.trim();
+      if (!userMsg) return;
+      // Show user message
+      const userDiv = document.createElement('div');
+      userDiv.className = 'user-message';
+      userDiv.textContent = userMsg;
+      botMessages.appendChild(userDiv);
+
+      // Simulate AI typing
+      setTimeout(() => {
+        const aiDiv = document.createElement('div');
+        aiDiv.className = 'ai-message';
+        aiDiv.textContent = fakeAIResponse(userMsg);
+        botMessages.appendChild(aiDiv);
+        botMessages.scrollTop = botMessages.scrollHeight;
+      }, 700);
+
+      botInput.value = '';
+      botMessages.scrollTop = botMessages.scrollHeight;
+    });
+  </script>
 </body>
 </html>
